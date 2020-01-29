@@ -1,6 +1,7 @@
 <a href="https://echo.labstack.com"><img height="80" src="https://cdn.labstack.com/images/echo-logo.svg"></a>
 
 ## echo-context
+
 Add some helpful helper function for [Echo](https://github.com/labstack/echo) 4 Go web framework's Context.
 
 ### Example
@@ -36,7 +37,7 @@ func main() {
   e.GET("/", func(c echo.Context) error {
     ctx := &zercleCTX.Context{c}
     name := ctx.FormValueDefault("name", "Anonymous")
-	return ctx.String(http.StatusOK, "Hello " + name)
+    return ctx.String(http.StatusOK, "Hello " + name)
   })
 
   // Start server
