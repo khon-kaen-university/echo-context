@@ -14,6 +14,8 @@ type Context struct {
 	echo.Context
 }
 
+var _ echo.Context = &Context{}
+
 // Redirect redirects the request to a provided URL with status code.
 // By this order
 // 1.HTTP redirect
