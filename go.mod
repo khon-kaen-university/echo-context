@@ -1,4 +1,4 @@
-module zercle/context
+module github.com/khon-kaen-university/echo-context
 
 go 1.13
 
