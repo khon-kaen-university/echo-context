@@ -24,7 +24,7 @@ func (c *Context) RedirectHTML(code int, url string) error {
 	if code < 300 || code > 308 {
 		return echo.ErrInvalidRedirectCode
 	}
-	c.Response().Header().Set(echo.HeaderContentType, echo.MIMETextPlainCharsetUTF8)
+	c.Response().Header().Set(echo.HeaderContentType, echo.MIMETextHTMLCharsetUTF8)
 	c.Response().WriteHeader(code)
 	html := "<html><head><meta http-equiv='Refresh' content='0; URL=" + url + "'></head><body><script>window.location.replace('" + url + "');</script></body></html>"
 	_, err := c.Response().Write([]byte(html))
