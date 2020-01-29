@@ -29,8 +29,8 @@ func (c *Context) Redirect(code int, url string) error {
 	c.Response().Header().Set(echo.HeaderContentType, echo.MIMETextPlainCharsetUTF8)
 	c.Response().WriteHeader(code)
 	html := "<html><head><meta http-equiv='Refresh' content='0; URL=" + url + "'></head><body><script>window.location.replace('" + url + "');</script></body></html>"
-	c.Response().Write([]byte(html))
-	return nil
+	_, err := c.Response().Write([]byte(html))
+	return err
 }
 
 // FormValueDefault returns the form field value for the provided name.
@@ -53,7 +53,7 @@ func (c *Context) FormValueTrim(name string) string {
 // If value encoded with base64 return will be decoded string.
 func (c *Context) FormValueBase64(name string) string {
 	v := c.FormValueTrim(name)
-	if de, err := base64.URLEncoding.DecodeString(v); err != nil {
+	if de, err := base64.URLEncoding.DecodeString(v); err == nil {
 		v = string(de)
 	}
 	return v
