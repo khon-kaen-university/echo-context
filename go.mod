@@ -1,4 +1,4 @@
-module github.com/khon-kaen-university/echo-context/
+module github.com/khon-kaen-university/echo-context/v1
 
 go 1.13
 
