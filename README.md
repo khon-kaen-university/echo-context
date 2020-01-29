@@ -16,6 +16,8 @@ import (
   zercleCTX "github.com/khon-kaen-university/echo-context"
 )
 
+var _ echo.Context = &Context{}
+
 func main() {
   // Echo instance
   e := echo.New()
