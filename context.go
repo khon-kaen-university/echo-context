@@ -16,16 +16,14 @@ type Context struct {
 
 var _ echo.Context = &Context{}
 
-// Redirect redirects the request to a provided URL with status code.
+// RedirectHTML redirects the request to a provided URL with status code.
 // By this order
-// 1.HTTP redirect
-// 2.HTML redirect
-// 3.JavaScript redirect
-func (c *Context) Redirect(code int, url string) error {
+// 1.HTML redirect
+// 2.JavaScript redirect
+func (c *Context) RedirectHTML(code int, url string) error {
 	if code < 300 || code > 308 {
 		return echo.ErrInvalidRedirectCode
 	}
-	c.Response().Header().Set(echo.HeaderLocation, url)
 	c.Response().Header().Set(echo.HeaderContentType, echo.MIMETextPlainCharsetUTF8)
 	c.Response().WriteHeader(code)
 	html := "<html><head><meta http-equiv='Refresh' content='0; URL=" + url + "'></head><body><script>window.location.replace('" + url + "');</script></body></html>"
