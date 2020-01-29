@@ -27,10 +27,10 @@ func main() {
 
   // Use in middleware
   e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
-	return func(c echo.Context) error {
-		ctx := &zercleCTX.Context{c}
-		return next(ctx)
-	}
+    return func(c echo.Context) error {
+      ctx := &zercleCTX.Context{c}
+      return next(ctx)
+    }
   })
 
   // Use in routes
