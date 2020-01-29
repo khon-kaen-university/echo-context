@@ -34,7 +34,7 @@ func main() {
 
   // Use in routes
   e.GET("/", func(c echo.Context) error {
-    ctx := &zercleCTX.Context{c}
+    ctx := c.(*zercleCTX.Context)
     name := ctx.FormValueDefault("name", "Anonymous")
     return ctx.String(http.StatusOK, "Hello " + name)
   })
