@@ -13,7 +13,7 @@ import (
   "net/http"
   "github.com/labstack/echo/v4"
   "github.com/labstack/echo/v4/middleware"
-  zercleCTX "github.com/khon-kaen-university/echo-context/v1"
+  zercleCTX "github.com/khon-kaen-university/echo-context"
 )
 
 func main() {
