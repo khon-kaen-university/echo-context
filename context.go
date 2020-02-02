@@ -61,7 +61,7 @@ func (c *Context) FormValueBase64(name string) string {
 //
 // If not found returns -1 and a non-nil error.
 func (c *Context) FormValueInt(name string) (int, error) {
-	v := c.FormValue(name)
+	v := c.FormValueTrim(name)
 	if v == "" {
 		return -1, echo.ErrNotFound
 	}
@@ -83,7 +83,7 @@ func (c *Context) FormValueIntDefault(name string, def int) int {
 //
 // If not found returns -1 and a no-nil error.
 func (c *Context) FormValueInt64(name string) (int64, error) {
-	v := c.FormValue(name)
+	v := c.FormValueTrim(name)
 	if v == "" {
 		return -1, echo.ErrNotFound
 	}
@@ -105,7 +105,7 @@ func (c *Context) FormValueInt64Default(name string, def int64) int64 {
 //
 // If not found returns -1 and a non-nil error.
 func (c *Context) FormValueFloat64(name string) (float64, error) {
-	v := c.FormValue(name)
+	v := c.FormValueTrim(name)
 	if v == "" {
 		return -1, echo.ErrNotFound
 	}
@@ -127,7 +127,111 @@ func (c *Context) FormValueFloat64Default(name string, def float64) float64 {
 //
 // If not found or value is false, then it returns false, otherwise true.
 func (c *Context) FormValueBool(name string) (bool, error) {
-	v := c.FormValue(name)
+	v := c.FormValueTrim(name)
+	if v == "" {
+		return false, echo.ErrNotFound
+	}
+
+	return strconv.ParseBool(v)
+}
+
+// ParamDefault returns path parameter by name.
+//
+// Returns the "def" if not found.
+func (c *Context) ParamDefault(name string, def string) string {
+	if v := c.Param(name); len(v) > 0 {
+		return v
+	}
+	return def
+}
+
+// ParamTrim returns path parameter by name, without trailing spaces.
+func (c *Context) ParamTrim(name string) string {
+	return strings.TrimSpace(c.Param(name))
+}
+
+// ParamBase64 returns path parameter by name.
+//
+// If value encoded with base64 return will be decoded string.
+func (c *Context) ParamBase64(name string) string {
+	v := c.ParamTrim(name)
+	if de, err := base64.URLEncoding.DecodeString(v); err == nil {
+		v = string(de)
+	}
+	return v
+}
+
+// ParamInt returns path parameter by name, as int.
+//
+// If not found returns -1 and a non-nil error.
+func (c *Context) ParamInt(name string) (int, error) {
+	v := c.ParamTrim(name)
+	if v == "" {
+		return -1, echo.ErrNotFound
+	}
+	return strconv.Atoi(v)
+}
+
+// ParamIntDefault returns path parameter by name, as int.
+//
+// If not found returns or parse errors the "def".
+func (c *Context) ParamIntDefault(name string, def int) int {
+	if v, err := c.ParamInt(name); err == nil {
+		return v
+	}
+
+	return def
+}
+
+// ParamInt64 returns path parameter by name, as float64.
+//
+// If not found returns -1 and a no-nil error.
+func (c *Context) ParamInt64(name string) (int64, error) {
+	v := c.ParamTrim(name)
+	if v == "" {
+		return -1, echo.ErrNotFound
+	}
+	return strconv.ParseInt(v, 10, 64)
+}
+
+// ParamInt64Default returns path parameter by name, as int64.
+//
+// If not found or parse errors returns the "def".
+func (c *Context) ParamInt64Default(name string, def int64) int64 {
+	if v, err := c.ParamInt64(name); err == nil {
+		return v
+	}
+
+	return def
+}
+
+// ParamFloat64 returns path parameter by name, as float64.
+//
+// If not found returns -1 and a non-nil error.
+func (c *Context) ParamFloat64(name string) (float64, error) {
+	v := c.ParamTrim(name)
+	if v == "" {
+		return -1, echo.ErrNotFound
+	}
+	return strconv.ParseFloat(v, 64)
+}
+
+// ParamFloat64Default returns path parameter by name, as float64.
+//
+// If not found or parse errors returns the "def".
+func (c *Context) ParamFloat64Default(name string, def float64) float64 {
+	if v, err := c.ParamFloat64(name); err == nil {
+		return v
+	}
+
+	return def
+}
+
+// ParamBool returns path parameter by name, as bool.
+//
+// If not found or value is false, then it returns false, otherwise true.
+func (c *Context) ParamBool(name string) (bool, error) {
+	v := c.ParamTrim(name)
 	if v == "" {
 		return false, echo.ErrNotFound
 	}
