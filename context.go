@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/labstack/echo/v4"
 )
@@ -44,6 +45,33 @@ func (c *Context) FormValueDefault(name string, def string) string {
 // FormValueTrim returns the form field value for the provided name, without trailing spaces.
 func (c *Context) FormValueTrim(name string) string {
 	return strings.TrimSpace(c.FormValue(name))
+}
+
+// FormValueDate returns the form field date value for the provided name.
+func (c *Context) FormValueDate(name string) time.Time {
+	out, err := time.Parse("2006-01-02", strings.TrimSpace(c.FormValue(name)))
+	if err != nil {
+		out = time.Time{}
+	}
+	return out
+}
+
+// FormValueTime returns the form field time value for the provided name.
+func (c *Context) FormValueTime(name string) time.Time {
+	out, err := time.Parse("15:04:05.999", strings.TrimSpace(c.FormValue(name)))
+	if err != nil {
+		out = time.Time{}
+	}
+	return out
+}
+
+// FormValueDateTime returns the form field datetime-local value for the provided name.
+func (c *Context) FormValueDateTime(name string) time.Time {
+	out, err := time.Parse("2006-01-02T15:04:05.999", strings.TrimSpace(c.FormValue(name)))
+	if err != nil {
+		out = time.Time{}
+	}
+	return out
 }
 
 // FormValueBase64 returns the form field value for the provided name.
