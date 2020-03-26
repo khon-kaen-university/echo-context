@@ -48,6 +48,7 @@ func (c *Context) FormValueTrim(name string) string {
 }
 
 // FormValueDate returns the form field date value for the provided name.
+// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date
 func (c *Context) FormValueDate(name string) time.Time {
 	out, err := time.Parse("2006-01-02", strings.TrimSpace(c.FormValue(name)))
 	if err != nil {
@@ -57,8 +58,9 @@ func (c *Context) FormValueDate(name string) time.Time {
 }
 
 // FormValueTime returns the form field time value for the provided name.
+// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/time
 func (c *Context) FormValueTime(name string) time.Time {
-	out, err := time.Parse("15:04:05.999", strings.TrimSpace(c.FormValue(name)))
+	out, err := time.Parse("15:04", strings.TrimSpace(c.FormValue(name)))
 	if err != nil {
 		out = time.Time{}
 	}
@@ -66,8 +68,9 @@ func (c *Context) FormValueTime(name string) time.Time {
 }
 
 // FormValueDateTime returns the form field datetime-local value for the provided name.
+// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime-local
 func (c *Context) FormValueDateTime(name string) time.Time {
-	out, err := time.Parse("2006-01-02T15:04:05.999", strings.TrimSpace(c.FormValue(name)))
+	out, err := time.Parse("2006-01-02T15:04", strings.TrimSpace(c.FormValue(name)))
 	if err != nil {
 		out = time.Time{}
 	}
